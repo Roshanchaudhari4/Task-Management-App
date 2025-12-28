@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000; // Changed from 5000 to avoid conflicts
 
 // Middleware
 app.use(cors());
@@ -34,6 +34,11 @@ const writeTasks = (tasks) => {
 };
 
 // Routes
+
+// GET / - Welcome message
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to Task Management API' });
+});
 
 // GET /tasks - Fetch all tasks
 app.get('/tasks', (req, res) => {
@@ -96,7 +101,30 @@ app.delete('/tasks/:id', (req, res) => {
   res.status(200).json(deletedTask);
 });
 
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Catch all handler: send back React's index.html file for any non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Tasks API available at: http://localhost:${PORT}/tasks`);
+  console.log(`🚀 Opening browser to tasks page...`);
+
+  // Automatically open browser to tasks page
+  const { exec } = require('child_process');
+  const url = `http://localhost:${PORT}/tasks`;
+
+  // Use start command for Windows
+  exec(`start ${url}`, (error) => {
+    if (error) {
+      console.log(`❌ Could not open browser automatically. Please visit: ${url}`);
+    } else {
+      console.log(`✅ Browser opened to: ${url}`);
+    }
+  });
 });
