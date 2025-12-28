@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -8,8 +8,17 @@ const api = axios.create({
 
 // API functions
 export const getTasks = async () => {
-  const response = await api.get('/tasks');
-  return response.data;
+  console.log('Making GET request to /api/tasks');
+  try {
+    const response = await api.get('/tasks');
+    console.log('API response received:', response.status, response.data);
+    console.log('Response data type:', typeof response.data, Array.isArray(response.data));
+    return response.data;
+  } catch (error) {
+    console.error('API request failed:', error);
+    console.error('Error response:', error.response?.data);
+    throw error;
+  }
 };
 
 export const addTask = async (task) => {

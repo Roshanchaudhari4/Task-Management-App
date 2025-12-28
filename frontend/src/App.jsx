@@ -12,15 +12,21 @@ function App() {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
+    console.log('App component mounted, fetching tasks...');
     fetchTasks();
   }, []);
 
   const fetchTasks = async () => {
     try {
+      console.log('Fetching tasks from API...');
       const data = await getTasks();
+      console.log('Tasks received from API:', data);
+      console.log('Tasks count:', data.length);
       setTasks(data);
+      console.log('Tasks set in state:', data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
+      console.error('Error details:', error.response || error.message);
     }
   };
 

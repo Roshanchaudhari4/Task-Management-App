@@ -3,6 +3,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import TaskItem from './TaskItem';
 
 const TaskList = ({ tasks, onEdit, onDelete, onToggleComplete }) => {
+  console.log('TaskList rendering with tasks:', tasks);
+  console.log('Tasks array length:', tasks.length);
   return (
     <TableContainer component={Paper}>
       <Table>
