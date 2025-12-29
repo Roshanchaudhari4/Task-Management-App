@@ -101,12 +101,6 @@ app.delete('/tasks/:id', (req, res) => {
   res.status(200).json(deletedTask);
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Tasks API available at: http://localhost:${PORT}/tasks`);
-});
-
 // Serve static files from the React app build directory (if it exists)
 const distPath = path.join(__dirname, 'dist');
 if (fs.existsSync(distPath)) {
@@ -116,3 +110,9 @@ if (fs.existsSync(distPath)) {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Tasks API available at: http://localhost:${PORT}/tasks`);
+});
