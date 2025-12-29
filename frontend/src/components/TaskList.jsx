@@ -11,7 +11,6 @@ const TaskList = ({ tasks, onEdit, onDelete, onToggleComplete }) => {
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
-            <TableCell>Description</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Completed</TableCell>
             <TableCell>Actions</TableCell>

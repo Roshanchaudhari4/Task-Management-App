@@ -7,7 +7,6 @@ const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
   return (
     <TableRow className={task.completed ? 'completed' : ''}>
       <TableCell>{task.title}</TableCell>
-      <TableCell>{task.description}</TableCell>
       <TableCell>
         <Chip
           label={task.completed ? 'Completed' : 'Pending'}

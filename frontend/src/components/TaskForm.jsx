@@ -2,26 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material';
 
 const TaskForm = ({ open, onClose, onSubmit, task }) => {
-  const [formData, setFormData] = useState({ title: '', description: '' });
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
     if (task) {
-      setFormData({ title: task.title, description: task.description });
+      setTitle(task.title);
     } else {
-      setFormData({ title: '', description: '' });
+      setTitle('');
     }
   }, [task, open]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (task) {
-      onSubmit({ ...task, ...formData });
+      onSubmit({ ...task, title });
     } else {
-      onSubmit(formData);
+      onSubmit({ title });
     }
   };
 
@@ -38,21 +34,8 @@ const TaskForm = ({ open, onClose, onSubmit, task }) => {
             type="text"
             fullWidth
             variant="outlined"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            margin="dense"
-            name="description"
-            label="Description"
-            type="text"
-            fullWidth
-            variant="outlined"
-            multiline
-            rows={4}
-            value={formData.description}
-            onChange={handleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
         </DialogContent>
