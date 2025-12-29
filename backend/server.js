@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000; // Changed from 5000 to avoid conflicts
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -101,30 +101,8 @@ app.delete('/tasks/:id', (req, res) => {
   res.status(200).json(deletedTask);
 });
 
-// Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// Catch all handler: send back React's index.html file for any non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
-
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
   console.log(`Tasks API available at: http://localhost:${PORT}/tasks`);
-  console.log(`🚀 Opening browser to tasks page...`);
-
-  // Automatically open browser to tasks page
-  const { exec } = require('child_process');
-  const url = `http://localhost:${PORT}/tasks`;
-
-  // Use start command for Windows
-  exec(`start ${url}`, (error) => {
-    if (error) {
-      console.log(`❌ Could not open browser automatically. Please visit: ${url}`);
-    } else {
-      console.log(`✅ Browser opened to: ${url}`);
-    }
-  });
 });

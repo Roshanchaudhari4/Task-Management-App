@@ -56,7 +56,7 @@ A full-stack task management application built with MERN stack (MongoDB-free ver
    npm run dev
    ```
 
-The backend server will run on `http://localhost:5000`.
+The backend server will run on `http://localhost:3000`.
 
 ### Frontend Setup
 
@@ -83,11 +83,11 @@ You can test the backend APIs using Postman:
 
 1. **GET /tasks** - Fetch all tasks
    - Method: GET
-   - URL: `http://localhost:5000/tasks`
+   - URL: `http://localhost:3000/tasks`
 
 2. **POST /tasks** - Add new task
    - Method: POST
-   - URL: `http://localhost:5000/tasks`
+   - URL: `http://localhost:3000/tasks`
    - Headers: `Content-Type: application/json`
    - Body (raw JSON):
      ```json
@@ -99,7 +99,7 @@ You can test the backend APIs using Postman:
 
 3. **PUT /tasks/:id** - Update task
    - Method: PUT
-   - URL: `http://localhost:5000/tasks/1` (replace 1 with actual task ID)
+   - URL: `http://localhost:3000/tasks/1` (replace 1 with actual task ID)
    - Headers: `Content-Type: application/json`
    - Body (raw JSON):
      ```json
@@ -112,7 +112,7 @@ You can test the backend APIs using Postman:
 
 4. **DELETE /tasks/:id** - Delete task
    - Method: DELETE
-   - URL: `http://localhost:5000/tasks/1` (replace 1 with actual task ID)
+   - URL: `http://localhost:3000/tasks/1` (replace 1 with actual task ID)
 
 ## Project Structure
 
@@ -174,17 +174,57 @@ To initialize and push to GitHub:
 
 ## Deployment
 
-The application is ready for deployment. For production:
+### Backend Deployment (Render)
 
-1. Build the frontend:
-   ```
-   cd frontend
-   npm run build
-   ```
+1. **Prepare the backend for deployment:**
+   - The backend is already configured to use `process.env.PORT`
+   - Ensure `package.json` has the correct start script
 
-2. Serve the built files from the backend or a static server.
+2. **Deploy to Render:**
+   - Go to [render.com](https://render.com) and sign up/login
+   - Click "New +" and select "Web Service"
+   - Connect your GitHub repository
+   - Configure the service:
+     - **Name:** task-management-backend
+     - **Environment:** Node
+     - **Build Command:** `npm install`
+     - **Start Command:** `npm start`
+   - Click "Create Web Service"
 
-3. For the backend, ensure the tasks.json file is writable in production environment.
+3. **Note the deployed URL** (e.g., `https://task-management-backend.onrender.com`)
+
+### Frontend Deployment (Vercel)
+
+1. **Deploy to Vercel:**
+   - Go to [vercel.com](https://vercel.com) and sign up/login
+   - Click "New Project"
+   - Import your GitHub repository
+   - Configure the project:
+     - **Framework Preset:** Vite
+     - **Root Directory:** (leave empty - vercel.json will handle it)
+     - **Build Command:** (will use vercel.json)
+     - **Output Directory:** (will use vercel.json)
+   - Add environment variable:
+     - **Name:** `VITE_API_URL`
+     - **Value:** Your Render backend URL (e.g., `https://task-management-backend.onrender.com`)
+   - Click "Deploy"
+
+3. **Access your deployed application** at the Vercel-provided URL
+
+### Alternative Deployment Options
+
+- **Backend:** Heroku, Railway, DigitalOcean App Platform
+- **Frontend:** Netlify, GitHub Pages, Firebase Hosting
+
+## Environment Variables
+
+### Frontend (.env)
+```
+VITE_API_URL=https://your-backend-url.onrender.com
+```
+
+### Backend
+Render automatically provides the `PORT` environment variable.
 
 ## Contributing
 
