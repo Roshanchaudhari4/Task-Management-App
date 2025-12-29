@@ -35,11 +35,6 @@ const writeTasks = (tasks) => {
 
 // Routes
 
-// GET / - Welcome message
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to Task Management API' });
-});
-
 // GET /tasks - Fetch all tasks
 app.get('/tasks', (req, res) => {
   const tasks = readTasks();
