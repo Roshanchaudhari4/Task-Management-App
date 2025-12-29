@@ -174,57 +174,25 @@ To initialize and push to GitHub:
 
 ## Deployment
 
-### Backend Deployment (Render)
+### Combined Frontend + Backend Deployment (Render)
 
-1. **Prepare the backend for deployment:**
-   - The backend is already configured to use `process.env.PORT`
-   - Ensure `package.json` has the correct start script
-
-2. **Deploy to Render:**
-   - Go to [render.com](https://render.com) and sign up/login
-   - Click "New +" and select "Web Service"
+1. **Deploy to Render:**
+   - Go to [render.com](https://render.com) and create a new Web Service
    - Connect your GitHub repository
-   - Configure the service:
-     - **Name:** task-management-backend
+   - Configure:
      - **Environment:** Node
-     - **Build Command:** `npm install`
+     - **Build Command:** `npm install && npm run build`
      - **Start Command:** `npm start`
    - Click "Create Web Service"
 
-3. **Note the deployed URL** (e.g., `https://task-management-backend.onrender.com`)
+2. **Access your application** at the Render-provided URL
 
-### Frontend Deployment (Vercel)
+### Alternative: Separate Deployments
 
-1. **Deploy to Vercel:**
-   - Go to [vercel.com](https://vercel.com) and sign up/login
-   - Click "New Project"
-   - Import your GitHub repository
-   - Configure the project:
-     - **Framework Preset:** Vite
-     - **Root Directory:** (leave empty - vercel.json will handle it)
-     - **Build Command:** (will use vercel.json)
-     - **Output Directory:** (will use vercel.json)
-   - Add environment variable:
-     - **Name:** `VITE_API_URL`
-     - **Value:** Your Render backend URL (e.g., `https://task-management-backend.onrender.com`)
-   - Click "Deploy"
+If you prefer separate deployments:
 
-3. **Access your deployed application** at the Vercel-provided URL
-
-### Alternative Deployment Options
-
-- **Backend:** Heroku, Railway, DigitalOcean App Platform
-- **Frontend:** Netlify, GitHub Pages, Firebase Hosting
-
-## Environment Variables
-
-### Frontend (.env)
-```
-VITE_API_URL=https://your-backend-url.onrender.com
-```
-
-### Backend
-Render automatically provides the `PORT` environment variable.
+- **Backend on Render:** Follow the combined deployment steps above, but remove the build script and static file serving from server.js
+- **Frontend on Vercel:** Deploy the frontend folder with `VITE_API_URL` set to your Render backend URL
 
 ## Contributing
 
