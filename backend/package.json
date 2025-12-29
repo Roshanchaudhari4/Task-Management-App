@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "build": "cd ../frontend && npm install && npm run build",
-    "postinstall": "npm run build && node -e \"const fs = require('fs'); const path = require('path'); try { fs.cpSync(path.join(__dirname, '../frontend/dist'), path.join(__dirname, 'dist'), {recursive: true}); console.log('Frontend build copied successfully'); } catch(e) { console.log('Copy failed:', e.message); }\""
+    "postinstall": "npm run build && node -e \"const fs = require('fs'); const path = require('path'); const distSrc = path.join(__dirname, '../frontend/dist'); const distDest = path.join(__dirname, 'dist'); console.log('Copying from:', distSrc, 'to:', distDest); try { if (fs.existsSync(distSrc)) { fs.cpSync(distSrc, distDest, {recursive: true, force: true}); console.log('Frontend build copied successfully'); } else { console.log('Source dist folder not found'); } } catch(e) { console.log('Copy failed:', e.message); }\""
   },
   "dependencies": {
     "cors": "^2.8.5",
