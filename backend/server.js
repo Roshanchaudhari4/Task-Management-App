@@ -98,12 +98,19 @@ app.delete('/tasks/:id', (req, res) => {
 
 // Serve static files from the React app build directory (if it exists)
 const distPath = path.join(__dirname, 'dist');
+console.log('Checking for dist folder at:', distPath);
+console.log('Dist folder exists:', fs.existsSync(distPath));
+
 if (fs.existsSync(distPath)) {
+  console.log('Serving static files from dist folder');
   app.use(express.static(distPath));
   // Catch all handler: send back React's index.html file for any non-API routes
   app.get('*', (req, res) => {
+    console.log('Serving React app for route:', req.path);
     res.sendFile(path.join(distPath, 'index.html'));
   });
+} else {
+  console.log('Dist folder not found, static files will not be served');
 }
 
 // Start server
